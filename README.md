@@ -20,21 +20,13 @@ Include files:
 Initialize with `$.fn.completer` method.
 
 ```html
-<input class="completer" type="text">
+<input class="completer" type="email">
 ```
 
 ```javascript
 $(".completer").completer({
-    itemTag: "li",
-    filter: function(val) {
-        return val;
-    },
-    source: [],
-    selectedClass: "completer-selected",
-    separator: "",
-    template: "<ul class=\"completer-container\"></ul>",
-    suggest: false,
-    zIndex: 1
+    source: ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com", "aol.com"],
+    separator: "@"
 });
 ```
 
