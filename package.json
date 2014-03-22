@@ -2,7 +2,7 @@
     "name": "completer",
     "title": "Completer",
     "description": "A jQuery auto complete plugin.",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "author": "Fengyuan Chen",
     "homepage": "https://github.com/fengyuanchen/completer",
     "license": "MIT",

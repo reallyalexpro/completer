@@ -37,36 +37,28 @@ Setup with `$("#target").completer(options)`, or global setup with `$.fn.complet
 #### complete
 
 * type: function
-* default:
+* default: `function() {}`
 
-```javascript
-function() {}
-```
-
-Will bu run when complete.
+Will be run when complete.
 
 #### itemTag
 
 * type: string
 * default: "li"
 
+The element tag of list item.
+
 #### filter
 
 * type: function
-* default:
-
-```javascript
-function(val) {
-    return val;
-}
-```
+* default: `function(val) { return val; }`
 
 The function will be passed the input value and run before show the list.
 
 #### position
 
 * type: string
-* options: "bottom", "right"
+* options: "top", "right", "bottom", "left"
 * default: "bottom"
 
 The position of the container.
@@ -76,14 +68,14 @@ The position of the container.
 * type: array
 * default: []
 
-The source data to attach or suggest.
+The source data for complete or suggest.
 
 #### selectedClass
 
 * type: string
 * default: "completer-selected"
 
-A jQuery selector string, highlight the item when it's selectd.
+A jQuery selector string, highlight the item when it's selected.
 
 #### separator
 
@@ -97,7 +89,7 @@ This will be added between the value and attachment.
 * type: boolean
 * default: false
 
-Set it `true` to start the suggestion mode.
+Set it "true" to start the suggestion mode.
 
 #### template
 
@@ -111,4 +103,4 @@ The container of the completer.
 * type: number
 * default: 1
 
-The css `z-index` property for the container.
+The css "z-index" property for the container.
