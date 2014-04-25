@@ -1,5 +1,5 @@
 /*!
- * Completer v0.0.3
+ * Completer v0.0.5
  * https://github.com/fengyuanchen/completer
  *
  * Copyright 2014 Fengyuan Chen
@@ -18,7 +18,8 @@
 
     "use strict";
 
-    var $document = $(document),
+    var $window = $(window),
+        $document = $(document),
         Completer = function(element, options) {
             options = $.isPlainObject(options) ? options : {};
             this.$element = $(element);
@@ -31,11 +32,13 @@
         construstor: Completer,
         
         init: function() {
-            var data = Completer.fn.toArray(this.defaults.source);
+            var defaults = this.defaults,
+                data = Completer.fn.toArray(defaults.source);
             
             if (data.length > 0) {
                 this.data = data;
-                this.$completer = $(this.defaults.template);
+                this.regexp = Completer.fn.toRegexp(defaults.separator);
+                this.$completer = $(defaults.template);
                 this.$completer.hide().appendTo("body");
                 this.place();
                 
@@ -80,17 +83,17 @@
 
         attach: function(val) {
             var separator = this.defaults.separator,
-                position = separator ? val.indexOf(separator) : -1,
+                regexp = this.regexp,
+                part = regexp ? val.match(regexp) : null,
                 data = [],
-                part = "",
                 that = this,
                 reg,
                 item;
-
-            if (position !== -1) {
-                part = val.substring(position);
-                val = val.replace(part, "");
-                reg = new RegExp("^" + part, "img");
+            
+            if (part) {
+                part = part[0];
+                val = val.replace(regexp, "");
+                reg = new RegExp("^" +  Completer.fn.espace(part), "i");
             }
 
             $.each(this.data, function(i, n) {
@@ -104,15 +107,20 @@
                 }
             });
 
+            if (this.defaults.position === "top") {
+                data = data.reverse();
+            }
+
             this.fill(data.join(""));
         },
 
         suggest: function(val) {
-            var that = this,
+            var reg = new RegExp(Completer.fn.espace(val), "i"),
+                that = this,
                 data = [];
 
             $.each(this.data, function(i, n) {
-                if (n.indexOf(val) !== -1) {
+                if (reg.test(n)) {
                     data.push(that.template(n));
                 }
             });
@@ -127,16 +135,23 @@
         },
 
         fill: function(html) {
+            var filter;
+            
+            this.$completer.empty();
+
             if (html) {
-                this.$completer.empty().html(html);
-                this.$completer.children(":first").addClass(this.defaults.selectedClass);
+                filter = this.defaults.position === "top" ? ":last" : ":first";
+                this.$completer.html(html);
+                this.$completer.children(filter).addClass(this.defaults.selectedClass);
                 this.show();
+            } else {
+                this.hide();
             }
         },
 
         complete: function() {
             var defaults = this.defaults,
-                val = defaults.filter(this.$element.val());
+                val = defaults.filter(this.$element.val()).toString();
 
             if (val === "") {
                 this.hide();
@@ -228,41 +243,73 @@
                 left = offset.left,
                 top = offset.top,
                 height = $element.outerHeight(),
-                width = $element.outerWidth();
+                width = $element.outerWidth(),
+                styles = {
+                    minWidth: width,
+                    zIndex: this.defaults.zIndex
+                };
 
-            if (this.defaults.position === "right") {
-                left += width;
-            } else {
-                top += height;
+            switch (this.defaults.position) {
+                case "right":
+                    styles.left = left + width;
+                    styles.top = top;
+                    break;
+
+                case "left":
+                    styles.right = $window.innerWidth() - left;
+                    styles.top = top;
+                    break;
+
+                case "top":
+                    styles.left = left;
+                    styles.bottom = $window.innerHeight() - top;
+                    break;
+                
+                // case "bottom":
+                default:
+                    styles.left = left;
+                    styles.top = top + height;
             }
 
-            this.$completer.css({
-                left: left,
-                minWidth: width,
-                top: top,
-                zIndex: this.defaults.zIndex
-            });
+            this.$completer.css(styles);
         },
 
         show: function() {
             this.$completer.show();
+            $window.on("resize", $.proxy(this.place, this));
             $document.on("mousedown", $.proxy(this.hide, this));
         },
         
         hide: function() {
             this.$completer.hide();
+            $window.off("resize", this.place);
             $document.off("mousedown", this.hide);
         }
     };
 
     Completer.fn = {
+        toRegexp: function(s) {
+            if (typeof s === "string" && s !== "") {
+                s = this.espace(s);
+                
+                return new RegExp(s + "+[^" + s + "]*$", "i");
+            }
+            
+            return null;
+        },
+
+        espace: function(s) {
+            return s.replace(/([\.\$\^\{\[\(\|\)\*\+\?\\])/g, "\\$1");
+        },
+
         toArray: function(s) {
             if (typeof s === "string") {
-                s = s.replace(/[\{\}\[\]"']+/g, "").split(/[\,\|\/]+/);
-                s = $.map(s, function(n) {
-                    return $.trim(n);
-                });
+                s = s.replace(/[\{\}\[\]"']+/g, "").split(/\s*,+\s*/);
             }
+
+            s = $.map(s, function(n) {
+                return typeof n !== "string" ? n.toString() : n;
+            });
 
             return s;
         }
