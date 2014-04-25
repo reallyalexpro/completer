@@ -11,7 +11,7 @@ Include files:
 
 ```html
 <script src="/path/to/jquery.js"></script><!-- jQuery is required -->
-<link rel="stylesheet" href="/path/to/completer.css">
+<link  href="/path/to/completer.css" rel="stylesheet">
 <script src="/path/to/completer.js"></script>
 ```
 
@@ -102,7 +102,7 @@ Set it `true` to start the suggestion mode.
 #### template
 
 * type: string
-* default: "<ul class=\"completer-container\"></ul>"
+* default: `<ul class="completer-container"></ul>`
 
 The container of the completer.
 
