@@ -1,5 +1,5 @@
 /*!
- * Completer v0.0.5
+ * Completer v0.1.0
  * https://github.com/fengyuanchen/completer
  *
  * Copyright 2014 Fengyuan Chen
@@ -7,33 +7,32 @@
  */
 
 .completer-container {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-bottom-color: #39f;
+    position: absolute;
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0;
+    margin: 0;
     font-family: inherit;
     font-size: 14px;
     line-height: normal;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-bottom-color: #39f;
 }
 .completer-container li {
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
+    padding: .5em .8em;
     margin: 0;
     overflow: hidden;
-    padding: 0.5em 0.8em;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
 }
 .completer-container .completer-selected,
 .completer-container li:hover {
-    border-left: 1px solid #39f;
-    background-color: #eee;
     margin-left: -1px;
+    background-color: #eee;
+    border-left: 1px solid #39f;
 }

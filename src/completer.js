@@ -1,4 +1,4 @@
-(function(factory) {
+(function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD. Register as anonymous module.
         define(["jquery"], factory);
@@ -6,34 +6,32 @@
         // Browser globals.
         factory(jQuery);
     }
-}(function($) {
+})(function ($) {
 
     "use strict";
 
     var $window = $(window),
         $document = $(document),
-        Completer = function(element, options) {
-            options = $.isPlainObject(options) ? options : {};
+        Completer = function (element, options) {
             this.$element = $(element);
-            this.defaults = $.extend({}, Completer.defaults, this.$element.data(), options);
+            this.defaults = $.extend({}, Completer.defaults, this.$element.data(), $.isPlainObject(options) ? options : {});
             this.init();
-            // console.log(this);
         };
 
     Completer.prototype = {
-        construstor: Completer,
-        
-        init: function() {
+        constructor: Completer,
+
+        init: function () {
             var defaults = this.defaults,
                 data = Completer.fn.toArray(defaults.source);
-            
+
             if (data.length > 0) {
                 this.data = data;
                 this.regexp = Completer.fn.toRegexp(defaults.separator);
                 this.$completer = $(defaults.template);
                 this.$completer.hide().appendTo("body");
                 this.place();
-                
+
                 this.$element.on({
                     focus: $.proxy(this.enable, this),
                     blur: $.proxy(this.disable, this)
@@ -45,7 +43,7 @@
             }
         },
 
-        enable: function() {
+        enable: function () {
             if (!this.active) {
                 this.active = true;
                 this.$element.on({
@@ -59,7 +57,7 @@
             }
         },
 
-        disable: function() {
+        disable: function () {
             if (this.active) {
                 this.active = false;
                 this.$element.off({
@@ -73,7 +71,7 @@
             }
         },
 
-        attach: function(val) {
+        attach: function (val) {
             var separator = this.defaults.separator,
                 regexp = this.regexp,
                 part = regexp ? val.match(regexp) : null,
@@ -81,17 +79,17 @@
                 that = this,
                 reg,
                 item;
-            
+
             if (part) {
                 part = part[0];
                 val = val.replace(regexp, "");
                 reg = new RegExp("^" +  Completer.fn.espace(part), "i");
             }
 
-            $.each(this.data, function(i, n) {
+            $.each(this.data, function (i, n) {
                 n = separator + n;
                 item = that.template(val + n);
-                
+
                 if (reg && reg.test(n)) {
                     data.unshift(item);
                 } else {
@@ -106,12 +104,12 @@
             this.fill(data.join(""));
         },
 
-        suggest: function(val) {
+        suggest: function (val) {
             var reg = new RegExp(Completer.fn.espace(val), "i"),
                 that = this,
                 data = [];
 
-            $.each(this.data, function(i, n) {
+            $.each(this.data, function (i, n) {
                 if (reg.test(n)) {
                     data.push(that.template(n));
                 }
@@ -120,15 +118,15 @@
             this.fill(data.join(""));
         },
 
-        template: function(text) {
+        template: function (text) {
             var tag = this.defaults.itemTag;
 
             return ("<" + tag + ">" + text + "</" + tag + ">");
         },
 
-        fill: function(html) {
+        fill: function (html) {
             var filter;
-            
+
             this.$completer.empty();
 
             if (html) {
@@ -141,7 +139,7 @@
             }
         },
 
-        complete: function() {
+        complete: function () {
             var defaults = this.defaults,
                 val = defaults.filter(this.$element.val()).toString();
 
@@ -157,16 +155,16 @@
             }
         },
 
-        keydown: function(e) {
+        keydown: function (e) {
             if (e.keyCode === 13) {
                 e.stopPropagation();
                 e.preventDefault();
             }
         },
 
-        keyup: function(e) {
+        keyup: function (e) {
             var keyCode = e.keyCode;
-            
+
             if (keyCode === 13 || keyCode === 38 || keyCode === 40) {
                 this.toggle(keyCode);
             } else {
@@ -174,34 +172,34 @@
             }
         },
 
-        mouseover: function(e) {
+        mouseover: function (e) {
             var defaults = this.defaults,
                 selectedClass = defaults.selectedClass,
                 $target = $(e.target);
-            
+
             if ($target.is(defaults.itemTag)) {
                 $target.addClass(selectedClass).siblings().removeClass(selectedClass);
             }
         },
 
-        mousedown: function(e) {
+        mousedown: function (e) {
             e.stopPropagation();
             e.preventDefault();
             this.setValue($(e.target).text());
         },
 
-        setValue: function(val) {
+        setValue: function (val) {
             this.$element.val(val);
             this.defaults.complete();
             this.hide();
         },
 
-        toggle: function(keyCode) {
+        toggle: function (keyCode) {
             var selectedClass = this.defaults.selectedClass,
                 $selected = this.$completer.find("." + selectedClass);
 
             switch (keyCode) {
-                
+
                 // Down
                 case 40:
                     $selected.removeClass(selectedClass);
@@ -229,7 +227,7 @@
             $selected.addClass(selectedClass);
         },
 
-        place: function() {
+        place: function () {
             var $element = this.$element,
                 offset = $element.offset(),
                 left = offset.left,
@@ -256,7 +254,7 @@
                     styles.left = left;
                     styles.bottom = $window.innerHeight() - top;
                     break;
-                
+
                 // case "bottom":
                 default:
                     styles.left = left;
@@ -266,13 +264,13 @@
             this.$completer.css(styles);
         },
 
-        show: function() {
+        show: function () {
             this.$completer.show();
             $window.on("resize", $.proxy(this.place, this));
             $document.on("mousedown", $.proxy(this.hide, this));
         },
-        
-        hide: function() {
+
+        hide: function () {
             this.$completer.hide();
             $window.off("resize", this.place);
             $document.off("mousedown", this.hide);
@@ -280,26 +278,26 @@
     };
 
     Completer.fn = {
-        toRegexp: function(s) {
+        toRegexp: function (s) {
             if (typeof s === "string" && s !== "") {
                 s = this.espace(s);
-                
+
                 return new RegExp(s + "+[^" + s + "]*$", "i");
             }
-            
+
             return null;
         },
 
-        espace: function(s) {
+        espace: function (s) {
             return s.replace(/([\.\$\^\{\[\(\|\)\*\+\?\\])/g, "\\$1");
         },
 
-        toArray: function(s) {
+        toArray: function (s) {
             if (typeof s === "string") {
                 s = s.replace(/[\{\}\[\]"']+/g, "").split(/\s*,+\s*/);
             }
 
-            s = $.map(s, function(n) {
+            s = $.map(s, function (n) {
                 return typeof n !== "string" ? n.toString() : n;
             });
 
@@ -308,40 +306,36 @@
     };
 
     Completer.defaults = {
-        complete: function() {
-            // Do something when complete
-        },
-
         itemTag: "li",
-
-        filter: function(val) {
-            return val;
-        },
-
         position: "bottom", // or "right"
         source: [],
         selectedClass: "completer-selected",
         separator: "",
         suggest: false,
         template: "<ul class=\"completer-container\"></ul>",
-        zIndex: 1
+        zIndex: 1,
+
+        complete: $.noop,
+        filter: function (val) {
+            return val;
+        }
     };
 
-    Completer.setDefaults = function(options) {
+    Completer.setDefaults = function (options) {
         $.extend(Completer.defaults, options);
     };
 
     // Register as jQuery plugin
-    $.fn.completer = function(options) {
-        return this.each(function() {
+    $.fn.completer = function (options) {
+        return this.each(function () {
             $(this).data("completer", new Completer(this, options));
         });
     };
 
-    $.fn.completer.Constructor = Completer;
+    $.fn.completer.constructor = Completer;
     $.fn.completer.setDefaults = Completer.setDefaults;
 
-    $(function() {
+    $(function () {
         $("[completer]").completer();
     });
-}));
+});
