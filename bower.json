@@ -31,7 +31,6 @@
         "build",
         "release",
         "demos",
-        "assets",
         "docs"
     ],
     "dependencies": {
