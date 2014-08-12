@@ -6,7 +6,16 @@ A jQuery auto complete plugin.
 
 
 
-## Getting started
+# Getting started
+
+## Quick start
+
+Four quick start options are available:
+
+- [Download the latest release](https://github.com/fengyuanchen/completer/archive/master.zip).
+- Clone the repository: `git clone https://github.com/fengyuanchen/completer.git`.
+- Install with [NPM](http://npmjs.org): `npm install completer`.
+- Install with [Bower](http://bower.io): `bower install completer`.
 
 
 ## Installation
