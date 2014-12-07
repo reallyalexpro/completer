@@ -2,6 +2,9 @@
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as anonymous module.
     define(['jquery'], factory);
+  } else if (typeof exports === "object") {
+    // Node / CommonJS
+    factory(require("jquery"));
   } else {
     // Browser globals.
     factory(jQuery);
@@ -47,12 +50,12 @@
       if (!this.active) {
         this.active = true;
         this.$element.on({
-          keydown: $.proxy(this.keydown, this),
-          keyup: $.proxy(this.keyup, this)
+          keydown: (this._keydown = $.proxy(this.keydown, this)),
+          keyup: (this._keyup = $.proxy(this.keyup, this))
         });
         this.$completer.on({
-          mousedown: $.proxy(this.mousedown, this),
-          mouseover: $.proxy(this.mouseover, this)
+          mousedown: (this._mousedown = $.proxy(this.mousedown, this)),
+          mouseover: (this._mouseover = $.proxy(this.mouseover, this))
         });
       }
     },
@@ -61,12 +64,12 @@
       if (this.active) {
         this.active = false;
         this.$element.off({
-          keydown: this.keydown,
-          keyup: this.keyup
+          keydown: this._keydown,
+          keyup: this._keyup
         });
         this.$completer.off({
-          mousedown: this.mousedown,
-          mouseover: this.mouseover
+          mousedown: this._mousedown,
+          mouseover: this._mouseover
         });
       }
     },
@@ -118,7 +121,7 @@
         }
       });
 
-      this.fill(data.join(''));
+      this.fill(data.sort().join(''));
     },
 
     template: function (text) {
@@ -269,14 +272,14 @@
 
     show: function () {
       this.$completer.show();
-      $window.on('resize', $.proxy(this.place, this));
-      $document.on('mousedown', $.proxy(this.hide, this));
+      $window.on('resize', (this._place = $.proxy(this.place, this)));
+      $document.on('mousedown', (this._hide = $.proxy(this.hide, this)));
     },
 
     hide: function () {
       this.$completer.hide();
-      $window.off('resize', this.place);
-      $document.off('mousedown', this.hide);
+      $window.off('resize', this._place);
+      $document.off('mousedown', this._hide);
     }
   };
 
@@ -319,6 +322,7 @@
     zIndex: 1,
 
     complete: $.noop,
+
     filter: function (val) {
       return val;
     }
@@ -341,4 +345,5 @@
   $(function () {
     $('[completer]').completer();
   });
+
 });

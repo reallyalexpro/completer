@@ -1,4 +1,4 @@
-# [Completer](http://fengyuanchen.github.io/completer)
+# [Completer](https://github.com/fengyuanchen/completer)
 
 A jQuery auto complete plugin.
 
@@ -39,8 +39,8 @@ Initialize with `$.fn.completer` method.
 
 ```javascript
 $(".completer").completer({
-    source: ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com", "aol.com"],
-    separator: "@"
+  source: ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com", "aol.com"],
+  separator: "@"
 });
 ```
 
@@ -52,81 +52,81 @@ Setup with `$("#target").completer(options)`, or global setup with `$.fn.complet
 
 #### complete
 
-* type: function
-* default: `function() {}`
+- Type: `Function`
+- Default: `function() {}`
 
 Will be run when complete.
 
 
 #### itemTag
 
-* type: string
-* default: "li"
+- Type: `String`
+- Default: `"li"`
 
 The element tag of list item.
 
 
 #### filter
 
-* type: function
-* default: `function(val) { return val; }`
+- Type: `Function`
+- Default: `function(val) { return val; }`
 
 The function will be passed the input value and run before show the list.
 
 
 #### position
 
-* type: string
+- Type: `String`
 * options: "top", "right", "bottom", "left"
-* default: "bottom"
+- Default: `"bottom"`
 
 The position of the container.
 
 
 #### source
 
-* type: array
-* default: []
+- Type: `Array`
+- Default: `[]`
 
 The source data for complete or suggest.
 
 
 #### selectedClass
 
-* type: string
-* default: "completer-selected"
+- Type: `String`
+- Default: `"completer-selected"`
 
 A jQuery selector string, highlight the item when it's selected.
 
 
 #### separator
 
-* type: string
-* default: ""
+- Type: `String`
+- Default: `""`
 
 This will be added between the value and attachment.
 
 
 #### suggest
 
-* type: boolean
-* default: false
+- Type: `Boolean`
+- Default: `false`
 
 Set it `true` to start the suggestion mode.
 
 
 #### template
 
-* type: string
-* default: `<ul class="completer-container"></ul>`
+- Type: `String`
+- Default: `<ul class="completer-container"></ul>`
 
 The container of the completer.
 
 
 #### zIndex
 
-* type: number
-* default: 1
+- Type: `Number`
+- Default: `1`
 
 The css `z-index` property for the container.
 
