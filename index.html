@@ -1,185 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A jQuery auto complete plugin.">
-    <meta name="keywords" content="HTML, CSS, JS, JavaScript, jQuery plugin, auto complete, front-end, frontend, web development">
-    <meta name="author" content="Fengyuan Chen">
-    <title>Completer - Fengyuan Chen</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//fengyuanchen.github.io/assets/css/prettify.css">
-    <link rel="stylesheet" href="css/completer.min.css">
-    <link rel="stylesheet" href="css/docs.css">
-  </head>
-  <body>
-    <!-- header -->
-    <header class="navbar navbar-static-top docs-navbar-top" id="top">
-      <div class="container">
-        <div class="navbar-header">
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="javascript:void(0);" class="navbar-brand">Completer</a>
-        </div>
-        <nav class="collapse navbar-collapse" role="navigation">
-          <ul class="nav navbar-nav">
-            <li><a href="#getting-started">Getting started</a></li>
-            <li><a href="//github.com/fengyuanchen/completer">Github</a></li>
-            <li><a href="//github.com/fengyuanchen/completer/blob/master/LICENSE.md">License</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="//github.com/fengyuanchen/">About</a></li>
-            <li><a href="/">More</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <!-- banner -->
-    <div class="jumbotron docs-jumbotron">
-      <div class="container">
-        <h1>Completer</h1>
-        <p>A jQuery auto complete plugin.</p>
-      </div>
-    </div>
-
-    <!-- content -->
-    <div class="container">
-      <h1 class="page-header" id="getting-started">Getting started</h1>
-
-      <!-- Installation -->
-      <h2>Installation</h2>
-      <p>Include files:</p>
-      <pre class="prettyprint">&lt;script src=&quot;/path/to/jquery.js&quot;&gt;&lt;/script&gt;&lt;!-- jQuery is required --&gt;
-&lt;link  href=&quot;/path/to/completer.css rel=&quot;stylesheet&quot;&quot;&gt;
-&lt;script src=&quot;/path/to/completer.js&quot;&gt;&lt;/script&gt;</pre>
-
-      <!-- Initialize with "completer" attribute -->
-      <h2 class="page-header">Usage</h2>
-      <h3>Initialize with <code>completer</code> and <code>data-*</code> attributes</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-separator=&quot;/&quot; data-source=&quot;['img', 'css', 'js']&quot;&gt;</pre>
-      <p>Demo:</p>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Please input a path" completer data-separator="/" data-source="['img', 'css', 'js']">
-      </div>
-
-      <!-- Initialize with "$.fn.completer" method -->
-      <h3>Initialize with <code>$.fn.completer</code> method</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;input type=&quot;text&quot; id=&quot;auto-complete-email&quot;&gt;</pre>
-      <p>Javascript:</p>
-      <pre class="prettyprint">$(&quot;#auto-complete-email&quot;).completer({
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A jQuery auto complete plugin."><meta name="keywords" content="HTML, CSS, JS, JavaScript, jQuery plugin, auto complete, front-end, frontend, web development"><meta name="author" content="Fengyuan Chen"><title>Completer - Fengyuan Chen</title><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"><link rel="stylesheet" href="//fengyuanchen.github.io/assets/css/prettify.css"><link rel="stylesheet" href="css/completer.min.css"><link rel="stylesheet" href="css/docs.css"></head><body><header class="navbar navbar-static-top docs-navbar-top" id="top"><div class="container"><div class="navbar-header"><button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a href="javascript:void(0);" class="navbar-brand">Completer</a></div><nav class="collapse navbar-collapse" role="navigation"><ul class="nav navbar-nav"><li><a href="#getting-started">Getting started</a></li><li><a href="//github.com/fengyuanchen/completer">Github</a></li><li><a href="//github.com/fengyuanchen/completer/blob/master/LICENSE.md">License</a></li></ul><ul class="nav navbar-nav navbar-right"><li><a href="//github.com/fengyuanchen/">About</a></li><li><a href="/">More</a></li></ul></nav></div></header><div class="jumbotron docs-jumbotron"><div class="container"><h1>Completer</h1><p>A jQuery auto complete plugin.</p></div></div><div class="container"><h1 class="page-header" id="getting-started">Getting started</h1><h2>Installation</h2><p>Include files:</p><pre class="prettyprint">&lt;script src=&quot;/path/to/jquery.js&quot;&gt;&lt;/script&gt;&lt;!-- jQuery is required --&gt;
+&lt;link  href=&quot;/path/to/completer.css&quot; rel=&quot;stylesheet&quot;&quot;&gt;
+&lt;script src=&quot;/path/to/completer.js&quot;&gt;&lt;/script&gt;</pre><h2 class="page-header">Usage</h2><h3>Initialize with <code>data-toggle="completer"</code> and <code>data-*</code> attributes</h3><p>HTML:</p><pre class="prettyprint">&lt;input type=&quot;text&quot; data-toggle=&quot;completer&quot; data-separator=&quot;/&quot; data-source=&quot;['img', 'css', 'js']&quot;&gt;</pre><p>Demo:</p><div class="form-group"><input type="text" class="form-control" placeholder="Please input a path" completer data-separator="/" data-source="['img', 'css', 'js']"></div><h3>Initialize with <code>$.fn.completer</code> method</h3><p>HTML:</p><pre class="prettyprint">&lt;input type=&quot;text&quot; id=&quot;auto-complete-email&quot;&gt;</pre><p>Javascript:</p><pre class="prettyprint">$(&quot;#auto-complete-email&quot;).completer({
   separator: &quot;@&quot;,
   source: [&quot;gmail.com&quot;, &quot;yahoo.com&quot;, &quot;hotmail.com&quot;, &quot;outlook.com&quot;, &quot;live.com&quot;, &quot;aol.com&quot;, &quot;mail.com&quot;]
-});</pre>
-      <p>Demo:</p>
-      <div class="form-group">
-        <input type="text" id="auto-complete-email" class="form-control" placeholder="Please input your email">
-      </div>
-
-      <!-- Configure -->
-      <h2 class="page-header">Configure</h2>
-
-      <h3>Setup</h3>
-      <p>Setup with <code>$(&quot;#target&quot;).completer(options)</code>, or global setup with <code>$.fn.completer.setDefaults(options)</code>.</p>
-
-      <h3>Options</h3>
-      <p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-separator="@"</code>.</p>
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>complete</td>
-            <td>function</td>
-            <td>function() {}</td>
-            <td>Will be run when complete.</td>
-          </tr>
-          <tr>
-            <td>itemTag</td>
-            <td>string</td>
-            <td>"li"</td>
-            <td>The element tag of list item.</td>
-          </tr>
-          <tr>
-            <td>filter</td>
-            <td>function</td>
-            <td>function(val) { return val; }</td>
-            <td>The function will be passed the input value and run before show the list.</td>
-          </tr>
-          <tr>
-            <td>position</td>
-            <td>string</td>
-            <td>"bottom"</td>
-            <td>Options: "top", "right", "bottom", "left".</td>
-          </tr>
-          <tr>
-            <td>source</td>
-            <td>array</td>
-            <td>[]</td>
-            <td>The source data for complete or suggest.</td>
-          </tr>
-          <tr>
-            <td>selectedClass</td>
-            <td>string</td>
-            <td>"completer-selected"</td>
-            <td>A jQuery selector string, highlight the item when it's selected.</td>
-          </tr>
-          <tr>
-            <td>separator</td>
-            <td>string</td>
-            <td>""</td>
-            <td>This will be added between the value and attachment.</td>
-          </tr>
-          <tr>
-            <td>suggest</td>
-            <td>boolean</td>
-            <td>false</td>
-            <td>Set it "true" to start the suggestion mode.</td>
-          </tr>
-          <tr>
-            <td>template</td>
-            <td>string</td>
-            <td>"&lt;ul class=&quot;completer-container&quot;&gt;&lt;/ul&gt;"</td>
-            <td>The container of the completer.</td>
-          </tr>
-          <tr>
-            <td>zIndex</td>
-            <td>number</td>
-            <td>1</td>
-            <td>The css "z-index" property for the container.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- More Demos -->
-      <h2 class="page-header">More demos</h2>
-
-      <h3>Show list on the top</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-separator=&quot; &quot; data-source=&quot;['foo', 'bar', 'baz', 'qux']&quot; data-position=&quot;top&quot;&gt;</pre>
-      <p>Demo:</p>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Please input your email" completer data-separator=" " data-source="['foo', 'bar', 'baz', 'qux']" data-position="top">
-      </div>
-
-      <h3>Filter the input</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-separator=&quot; &quot; data-source=&quot;['foo', 'bar', 'baz', 'qux']&quot; data-position=&quot;top&quot;&gt;</pre>
-      <p>JavaScript:</p>
-      <pre class="prettyprint">$(&quot;#auto-complete-time&quot;).completer({
+});</pre><p>Demo:</p><div class="form-group"><input type="text" id="auto-complete-email" class="form-control" placeholder="Please input your email"></div><h2 class="page-header">Configure</h2><h3>Setup</h3><p>Setup with <code>$(&quot;#target&quot;).completer(options)</code>, or global setup with <code>$.fn.completer.setDefaults(options)</code>.</p><h3>Options</h3><p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-separator="@"</code>.</p><table class="table table-bordered table-striped"><thead><tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td>complete</td><td>function</td><td>function() {}</td><td>Will be run when complete.</td></tr><tr><td>itemTag</td><td>string</td><td>"li"</td><td>The element tag of list item.</td></tr><tr><td>filter</td><td>function</td><td>function(val) { return val; }</td><td>The function will be passed the input value and run before show the list.</td></tr><tr><td>position</td><td>string</td><td>"bottom"</td><td>Options: "top", "right", "bottom", "left".</td></tr><tr><td>source</td><td>array</td><td>[]</td><td>The source data for complete or suggest.</td></tr><tr><td>selectedClass</td><td>string</td><td>"completer-selected"</td><td>A jQuery selector string, highlight the item when it's selected.</td></tr><tr><td>separator</td><td>string</td><td>""</td><td>This will be added between the value and attachment.</td></tr><tr><td>suggest</td><td>boolean</td><td>false</td><td>Set it "true" to start the suggestion mode.</td></tr><tr><td>template</td><td>string</td><td>"&lt;ul class=&quot;completer-container&quot;&gt;&lt;/ul&gt;"</td><td>The container of the completer.</td></tr><tr><td>zIndex</td><td>number</td><td>1</td><td>The css "z-index" property for the container.</td></tr></tbody></table><h2 class="page-header">More demos</h2><h3>Show list on the top</h3><p>HTML:</p><pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-separator=&quot; &quot; data-source=&quot;['foo', 'bar', 'baz', 'qux']&quot; data-position=&quot;top&quot;&gt;</pre><p>Demo:</p><div class="form-group"><input type="text" class="form-control" placeholder="Please input your email" completer data-separator=" " data-source="['foo', 'bar', 'baz', 'qux']" data-position="top"></div><h3>Filter the input</h3><p>HTML:</p><pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-separator=&quot; &quot; data-source=&quot;['foo', 'bar', 'baz', 'qux']&quot; data-position=&quot;top&quot;&gt;</pre><p>JavaScript:</p><pre class="prettyprint">$(&quot;#auto-complete-time&quot;).completer({
   filter: function(val) {
     val = val.replace(/\D/g, &quot;&quot;).substr(0, 2);
 
@@ -192,31 +16,13 @@
   },
   separator: &quot;:&quot;,
   source: [&quot;00&quot;, &quot;05&quot;, &quot;10&quot;, &quot;15&quot;, &quot;20&quot;, &quot;25&quot;, &quot;30&quot;, &quot;35&quot;, &quot;40&quot;, &quot;45&quot;, &quot;50&quot;, &quot;55&quot;]
-});</pre>
-      <p>Demo:</p>
-      <div class="form-group">
-        <input type="text" id="auto-complete-time" class="form-control" placeholder="Please input a hour number">
-      </div>
-
-      <h3>Suggestion mode</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-suggest=&quot;true&quot; data-source=&quot;['foo', 'bar', 'baz', 'qux']&quot;&gt;</pre>
-      <p>Demo:</p>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="You can type a &quot;b&quot; for test ~" completer data-suggest="true" data-source="['foo', 'bar', 'baz', 'qux']">
-      </div>
-
-      <h3>Auto complete a domain</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;div&gt;
+});</pre><p>Demo:</p><div class="form-group"><input type="text" id="auto-complete-time" class="form-control" placeholder="Please input a hour number"></div><h3>Suggestion mode</h3><p>HTML:</p><pre class="prettyprint">&lt;input type=&quot;text&quot; completer data-suggest=&quot;true&quot; data-source=&quot;['foo', 'bar', 'baz', 'qux']&quot;&gt;</pre><p>Demo:</p><div class="form-group"><input type="text" class="form-control" placeholder="You can type a &quot;b&quot; for test ~" completer data-suggest="true" data-source="['foo', 'bar', 'baz', 'qux']"></div><h3>Auto complete a domain</h3><p>HTML:</p><pre class="prettyprint">&lt;div&gt;
   &lt;span&gt;www.&lt;/span&gt;
   &lt;input id=&quot;auto-complete-domain&quot; type=&quot;text&quot;&gt;
   &lt;span&gt;
     &lt;a id=&quot;auto-complete-go&quot; href=&quot;&quot;&gt;Go!&lt;/a&gt;
   &lt;/span&gt;
-&lt;/div&gt;</pre>
-      <p>JavaScript:</p>
-      <pre class="prettyprint">var $autoCompleteDomain = $(&quot;#auto-complete-domain&quot;),
+&lt;/div&gt;</pre><p>JavaScript:</p><pre class="prettyprint">var $autoCompleteDomain = $(&quot;#auto-complete-domain&quot;),
   $autoCompleteGo = $(&quot;#auto-complete-go&quot;);
 
 $autoCompleteDomain.completer({
@@ -227,27 +33,13 @@ $autoCompleteDomain.completer({
   },
   separator: &quot;.&quot;,
   source: [&quot;com&quot;, &quot;net&quot;, &quot;org&quot;, &quot;co&quot;, &quot;io&quot;, &quot;me&quot;, &quot;cn&quot;, &quot;com.cn&quot;]
-});</pre>
-      <p>Demo:</p>
-      <div class="input-group">
-        <span class="input-group-addon">www.</span>
-        <input id="auto-complete-domain" class="form-control" type="text" placeholder="Please input your domain">
-        <span class="input-group-btn">
-          <a id="auto-complete-go" class="btn btn-default" href="javascript:void(0);">Go!</a>
-        </span>
-      </div>
-
-      <h3>Auto suggest some websites</h3>
-      <p>HTML:</p>
-      <pre class="prettyprint">&lt;div&gt;
+});</pre><p>Demo:</p><div class="input-group"><span class="input-group-addon">www.</span> <input id="auto-complete-domain" class="form-control" type="text" placeholder="Please input your domain"> <span class="input-group-btn"><a id="auto-complete-go" class="btn btn-default" href="javascript:void(0);">Go!</a></span></div><h3>Auto suggest some websites</h3><p>HTML:</p><pre class="prettyprint">&lt;div&gt;
   &lt;span&gt;http://&lt;/span&gt;
   &lt;input id=&quot;auto-suggest-website&quot; type=&quot;text&quot;&gt;
   &lt;span&gt;
     &lt;a id=&quot;auto-suggest-go&quot; href=&quot;&quot;&gt;Go!&lt;/a&gt;
   &lt;/span&gt;
-&lt;/div&gt;</pre>
-      <p>JavaScript:</p>
-      <pre class="prettyprint">var $autoSuggestWebsite = $(&quot;#auto-suggest-website&quot;),
+&lt;/div&gt;</pre><p>JavaScript:</p><pre class="prettyprint">var $autoSuggestWebsite = $(&quot;#auto-suggest-website&quot;),
   $autoSuggestGo = $(&quot;#auto-suggest-go&quot;);
 
 $autoSuggestWebsite.completer({
@@ -271,36 +63,4 @@ $autoSuggestWebsite.completer({
     &quot;pinterest.com&quot;
   ],
   suggest: true
-});</pre>
-      <p>Demo:</p>
-      <div class="input-group">
-        <span class="input-group-addon">http://</span>
-        <input id="auto-suggest-website" class="form-control" type="text" placeholder="What website will you go ~">
-        <span class="input-group-btn">
-          <a id="auto-suggest-go" class="btn btn-default" href="javascript:void(0);">Go!</a>
-        </span>
-      </div>
-
-    </div><!-- content end -->
-
-    <!-- footer -->
-    <footer class="docs-footer">
-      <div class="container">
-        <div class="btn-group">
-          <a class="btn btn-link" href="//github.com/fengyuanchen/completer/">Github</a>
-          <a class="btn btn-link" href="//github.com/fengyuanchen/completer/blob/master/LICENSE.md">License</a>
-        </div>
-        <div class="btn-group pull-right">
-          <a class="btn btn-link" href="#top" title="Back to top">TOP</a>
-        </div>
-      </div>
-    </footer>
-
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="//fengyuanchen.github.io/assets/js/prettify.js"></script>
-    <script src="//fengyuanchen.github.io/assets/js/main.js"></script>
-    <script src="js/completer.min.js"></script>
-    <script src="js/docs.js"></script>
-  </body>
-</html>
+});</pre><p>Demo:</p><div class="input-group"><span class="input-group-addon">http://</span> <input id="auto-suggest-website" class="form-control" type="text" placeholder="What website will you go ~"> <span class="input-group-btn"><a id="auto-suggest-go" class="btn btn-default" href="javascript:void(0);">Go!</a></span></div></div><footer class="docs-footer"><div class="container"><div class="btn-group"><a class="btn btn-link" href="//github.com/fengyuanchen/completer/">Github</a> <a class="btn btn-link" href="//github.com/fengyuanchen/completer/blob/master/LICENSE.md">License</a></div><div class="btn-group pull-right"><a class="btn btn-link" href="#top" title="Back to top">TOP</a></div></div></footer><script src="//code.jquery.com/jquery-1.11.1.min.js"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script><script src="//fengyuanchen.github.io/assets/js/prettify.js"></script><script src="//fengyuanchen.github.io/assets/js/main.js"></script><script src="js/completer.min.js"></script><script src="js/docs.js"></script></body></html>
