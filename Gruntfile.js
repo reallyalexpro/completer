@@ -1,123 +1,206 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  "use strict";
+  'use strict';
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON("package.json"),
-    banner: "/*!\n" +
-        " * Completer v<%= pkg.version %>\n" +
-        " * <%= pkg.homepage %>\n" +
-        " *\n" +
-        " * Copyright <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>\n" +
-        " * Released under the <%= pkg.license.type %> license\n" +
-        " */\n",
+    pkg: grunt.file.readJSON('package.json'),
+
     clean: {
-      dist: ["dist/"],
-      build: ["build/<%= pkg.version %>.<%= grunt.template.today('yyyymmdd') %>"],
-      release: ["release/<%= pkg.version %>"]
+      dist: ['dist'],
+      build: ['build/<%= pkg.version %>.<%= grunt.template.today("yyyymmdd") %>'],
+      release: ['releases/<%= pkg.version %>'],
+      site: ['_gh_pages']
     },
+
     jshint: {
       options: {
-        jshintrc: ".jshintrc"
+        jshintrc: '.jshintrc'
       },
-      files: ["*.js", "src/*.js", "i18n/*.js"]
+      files: ['*.js', 'src/*.js']
     },
+
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      files: [/*'*.js', */'src/*.js']
+    },
+
     uglify: {
+      options: {
+        preserveComments: 'some'
+      },
       dist: {
-        src: "src/<%= pkg.name %>.js",
-        dest: "dist/<%= pkg.name %>.min.js"
+        files: {
+          'dist/<%= pkg.name %>.min.js': 'src/<%= pkg.name %>.js',
+          'dist/<%= pkg.name %>.data.min.js': 'src/<%= pkg.name %>.data.js'
+        }
+      },
+      site: {
+        src: 'docs/js/docs.js',
+        dest: '_gh_pages/js/docs.js'
       }
     },
+
+    replace: {
+      dist: {
+        options: {
+          prefix: '@',
+          patterns: [{
+            match: 'VERSION',
+            replacement: '<%= pkg.version %>'
+          }, {
+            match: 'YEAR',
+            replacement: (new Date()).getFullYear()
+          }, {
+            match: 'DATE',
+            replacement: (new Date()).toISOString()
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: 'dist/*',
+          dest: 'dist/'
+        }]
+      }
+    },
+
     autoprefixer: {
       options: {
-        browsers: ["last 2 versions", "ie 8", "ie 9", "android 2.3", "android 4", "opera 12"]
+        browsers: [
+          'Android 2.3',
+          'Android >= 4',
+          'Chrome >= 20',
+          'Firefox >= 24', // Firefox 24 is the latest ESR
+          'Explorer >= 8',
+          'iOS >= 6',
+          'Opera >= 12',
+          'Safari >= 6'
+        ]
       },
       core: {
         options: {
           map: false
         },
-        src: "dist/<%= pkg.name %>.css",
-        dest: "dist/<%= pkg.name %>.css"
+        src: 'dist/<%= pkg.name %>.css',
+        dest: 'dist/<%= pkg.name %>.css'
       }
     },
+
     csscomb: {
       options: {
-        config: ".csscomb.json"
+        config: '.csscomb.json'
       },
       core: {
-        src: "dist/<%= pkg.name %>.css",
-        dest: "dist/<%= pkg.name %>.css"
+        src: 'dist/<%= pkg.name %>.css',
+        dest: 'dist/<%= pkg.name %>.css'
       }
     },
+
     csslint: {
       options: {
-        csslintrc: ".csslintrc"
+        csslintrc: '.csslintrc'
       },
-      files: ["src/*.css"]
+      files: ['src/*.css']
     },
+
     cssmin: {
+      options: {
+        compatibility: 'ie8',
+        keepSpecialComments: '*',
+        noAdvanced: true
+      },
       dist: {
-        src: "src/<%= pkg.name %>.css",
-        dest: "dist/<%= pkg.name %>.min.css"
+        src: 'dist/<%= pkg.name %>.css',
+        dest: 'dist/<%= pkg.name %>.min.css'
+      },
+      site: {
+        src: 'docs/css/docs.css',
+        dest: '_gh_pages/css/docs.css'
       }
     },
-    usebanner: {
-      options: {
-        position: "top",
-        banner: "<%= banner %>"
-      },
-      files: ["dist/*.js", "dist/*.css"]
+
+    htmlmin: {
+      dist: {
+        options: {
+          minifyJS: true,
+          minifyCSS: true,
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {
+          '_gh_pages/index.html': 'docs/index.html'
+        }
+      }
     },
+
     copy: {
       dist: {
         expand: true,
-        cwd: "src/",
-        src: "**",
-        dest: "dist/",
-        filter: "isFile"
+        flatten: true,
+        src: 'src/*',
+        dest: 'dist'
       },
       build: {
         expand: true,
-        cwd: "dist/",
-        src: "**",
-        dest: "build/<%= pkg.version %>.<%= grunt.template.today('yyyymmdd') %>/",
-        filter: "isFile"
+        flatten: true,
+        src: 'dist/*',
+        dest: 'build/<%= pkg.version %>.<%= grunt.template.today("yyyymmdd") %>'
       },
       release: {
         expand: true,
-        cwd: "dist/",
-        src: "**",
-        dest: "release/<%= pkg.version %>/",
-        filter: "isFile"
+        flatten: true,
+        src: 'dist/*',
+        dest: 'releases/<%= pkg.version %>'
       },
-      syncCSS: {
+      docsCSS: {
         expand: true,
-        cwd: "dist/",
-        src: "*.css",
-        dest: "docs/css/",
-        filter: "isFile"
+        flatten: true,
+        src: 'dist/*.css',
+        dest: 'docs/css/'
       },
-      syncJS: {
+      docsJS: {
         expand: true,
-        cwd: "dist/",
-        src: "*.js",
-        dest: "docs/js/",
-        filter: "isFile"
+        flatten: true,
+        src: 'dist/*.js',
+        dest: 'docs/js/'
+      },
+      siteCSS: {
+        expand: true,
+        flatten: true,
+        src: 'dist/*.css',
+        dest: '_gh_pages/css/'
+      },
+      siteJS: {
+        expand: true,
+        flatten: true,
+        src: 'dist/*.js',
+        dest: '_gh_pages/js/'
+      },
+      html: {
+        expand: true,
+        flatten: true,
+        src: 'docs/*.html',
+        dest: '_gh_pages'
       }
     },
+
     watch: {
       files: [
-        "src/<%= pkg.name %>.js",
-        "src/<%= pkg.name %>.css"
+        'src/<%= pkg.name %>.js'
       ],
-      tasks: "default"
+      tasks: 'jshint'
     }
   });
 
   // Loading dependencies
-  require("load-grunt-tasks")(grunt);
+  require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask("release", ["clean:release", "copy:release"]);
-  grunt.registerTask("docs", ["copy:syncCSS", "copy:syncJS"]);
-  grunt.registerTask("default", ["clean:dist", "clean:build", "jshint", "uglify", "copy:dist", "autoprefixer", "csscomb", "csslint", "cssmin", "usebanner", "copy:build", "release", "docs"]);
+  grunt.registerTask('build', ['clean:build', 'copy:build']);
+  grunt.registerTask('release', ['clean:release', 'copy:release']);
+  grunt.registerTask('docs', ['copy:docsCSS', 'copy:docsJS']);
+  grunt.registerTask('site', ['clean:site', 'uglify:site', 'cssmin:site', 'copy:siteCSS', 'copy:siteJS', 'copy:html', 'htmlmin']);
+
+  grunt.registerTask('default', ['clean:dist', 'jshint', 'jscs', 'uglify:dist', 'copy:dist', 'replace', 'csslint', 'autoprefixer', 'csscomb', 'cssmin:dist', 'build', 'release', 'docs', 'site']);
 };

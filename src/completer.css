@@ -1,3 +1,13 @@
+/*!
+ * Completer v@VERSION
+ * https://github.com/fengyuanchen/completer
+ *
+ * Copyright 2014-@YEAR Fengyuan Chen
+ * Released under the MIT license
+ *
+ * Date: @DATE
+ */
+
 .completer-container {
   position: absolute;
   -webkit-box-sizing: border-box;

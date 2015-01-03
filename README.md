@@ -8,6 +8,8 @@ A jQuery auto complete plugin.
 
 # Getting started
 
+
+
 ## Quick start
 
 Four quick start options are available:
@@ -16,6 +18,7 @@ Four quick start options are available:
 - Clone the repository: `git clone https://github.com/fengyuanchen/completer.git`.
 - Install with [NPM](http://npmjs.org): `npm install completer`.
 - Install with [Bower](http://bower.io): `bower install completer`.
+
 
 
 ## Installation
@@ -27,6 +30,7 @@ Include files:
 <link  href="/path/to/completer.css" rel="stylesheet">
 <script src="/path/to/completer.js"></script>
 ```
+
 
 
 ## Usage
@@ -43,6 +47,7 @@ $(".completer").completer({
   separator: "@"
 });
 ```
+
 
 
 ## Options
@@ -129,6 +134,14 @@ The container of the completer.
 - Default: `1`
 
 The css `z-index` property for the container.
+
+
+
+## Methods
+
+#### destroy()
+
+Destroy the completer instance.
 
 
 

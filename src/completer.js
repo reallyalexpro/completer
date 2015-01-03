@@ -1,10 +1,20 @@
+/*!
+ * Completer v@VERSION
+ * https://github.com/fengyuanchen/completer
+ *
+ * Copyright 2014-@YEAR Fengyuan Chen
+ * Released under the MIT license
+ *
+ * Date: @DATE
+ */
+
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as anonymous module.
     define(['jquery'], factory);
-  } else if (typeof exports === "object") {
+  } else if (typeof exports === 'object') {
     // Node / CommonJS
-    factory(require("jquery"));
+    factory(require('jquery'));
   } else {
     // Browser globals.
     factory(jQuery);
@@ -19,6 +29,32 @@
         this.$element = $(element);
         this.defaults = $.extend({}, Completer.defaults, this.$element.data(), $.isPlainObject(options) ? options : {});
         this.init();
+      },
+
+      toRegexp = function (s) {
+        if (typeof s === 'string' && s !== '') {
+          s = espace(s);
+
+          return new RegExp(s + '+[^' + s + ']*$', 'i');
+        }
+
+        return null;
+      },
+
+      espace = function (s) {
+        return s.replace(/([\.\$\^\{\[\(\|\)\*\+\?\\])/g, '\\$1');
+      },
+
+      toArray = function (s) {
+        if (typeof s === 'string') {
+          s = s.replace(/[\{\}\[\]"']+/g, '').split(/\s*,+\s*/);
+        }
+
+        s = $.map(s, function (n) {
+          return typeof n !== 'string' ? n.toString() : n;
+        });
+
+        return s;
       };
 
   Completer.prototype = {
@@ -26,16 +62,16 @@
 
     init: function () {
       var defaults = this.defaults,
-          data = Completer.fn.toArray(defaults.source);
+          data = toArray(defaults.source);
 
       if (data.length > 0) {
         this.data = data;
-        this.regexp = Completer.fn.toRegexp(defaults.separator);
+        this.regexp = toRegexp(defaults.separator);
         this.$completer = $(defaults.template);
         this.$completer.hide().appendTo('body');
         this.place();
 
-        this.$element.on({
+        this.$element.attr('autocomplete', 'off').on({
           focus: $.proxy(this.enable, this),
           blur: $.proxy(this.disable, this)
         });
@@ -50,12 +86,12 @@
       if (!this.active) {
         this.active = true;
         this.$element.on({
-          keydown: (this._keydown = $.proxy(this.keydown, this)),
-          keyup: (this._keyup = $.proxy(this.keyup, this))
+          keydown: $.proxy(this.keydown, this),
+          keyup: $.proxy(this.keyup, this)
         });
         this.$completer.on({
-          mousedown: (this._mousedown = $.proxy(this.mousedown, this)),
-          mouseover: (this._mouseover = $.proxy(this.mouseover, this))
+          mousedown: $.proxy(this.mousedown, this),
+          mouseover: $.proxy(this.mouseover, this)
         });
       }
     },
@@ -64,12 +100,12 @@
       if (this.active) {
         this.active = false;
         this.$element.off({
-          keydown: this._keydown,
-          keyup: this._keyup
+          keydown: this.keydown,
+          keyup: this.keyup
         });
         this.$completer.off({
-          mousedown: this._mousedown,
-          mouseover: this._mouseover
+          mousedown: this.mousedown,
+          mouseover: this.mouseover
         });
       }
     },
@@ -87,7 +123,7 @@
       if (part) {
         part = part[0];
         val = val.replace(regexp, '');
-        reg = new RegExp('^' +  Completer.fn.espace(part), 'i');
+        reg = new RegExp('^' +  espace(part), 'i');
       }
 
       $.each(this.data, function (i, n) {
@@ -111,17 +147,25 @@
     },
 
     suggest: function (val) {
-      var reg = new RegExp(Completer.fn.espace(val), 'i'),
+      var reg = new RegExp(espace(val), 'i'),
           that = this,
-          data = [];
+          matched = [];
 
       $.each(this.data, function (i, n) {
         if (reg.test(n)) {
-          data.push(that.template(n));
+          matched.push(n);
         }
       });
 
-      this.fill(data.sort().join(''));
+      matched.sort(function (a, b) {
+        return a.indexOf(val) - b.indexOf(val);
+      });
+
+      $.each(matched, function (i, n) {
+        matched[i] = that.template(n);
+      });
+
+      this.fill(matched.join(''));
     },
 
     template: function (text) {
@@ -272,42 +316,24 @@
 
     show: function () {
       this.$completer.show();
-      $window.on('resize', (this._place = $.proxy(this.place, this)));
-      $document.on('mousedown', (this._hide = $.proxy(this.hide, this)));
+      $window.on('resize', $.proxy(this.place, this));
+      $document.on('mousedown', $.proxy(this.hide, this));
     },
 
     hide: function () {
       this.$completer.hide();
-      $window.off('resize', this._place);
-      $document.off('mousedown', this._hide);
-    }
-  };
-
-  Completer.fn = {
-    toRegexp: function (s) {
-      if (typeof s === 'string' && s !== '') {
-        s = this.espace(s);
-
-        return new RegExp(s + '+[^' + s + ']*$', 'i');
-      }
-
-      return null;
+      $window.off('resize', this.place);
+      $document.off('mousedown', this.hide);
     },
 
-    espace: function (s) {
-      return s.replace(/([\.\$\^\{\[\(\|\)\*\+\?\\])/g, '\\$1');
-    },
+    destroy: function () {
+      this.hide();
+      this.disable();
 
-    toArray: function (s) {
-      if (typeof s === 'string') {
-        s = s.replace(/[\{\}\[\]"']+/g, '').split(/\s*,+\s*/);
-      }
-
-      s = $.map(s, function (n) {
-        return typeof n !== 'string' ? n.toString() : n;
+      this.$element.off({
+        focus: this.enable,
+        blur: this.disable
       });
-
-      return s;
     }
   };
 
@@ -334,16 +360,31 @@
 
   // Register as jQuery plugin
   $.fn.completer = function (options) {
-    return this.each(function () {
-      $(this).data('completer', new Completer(this, options));
+    var args = [].slice.call(arguments, 1),
+        result;
+
+    this.each(function () {
+      var $this = $(this),
+          data = $this.data('completer'),
+          fn;
+
+      if (!data) {
+        $this.data('completer', (data = new Completer(this, options)));
+      }
+
+      if (typeof options === 'string' && $.isFunction((fn = data[options]))) {
+        result = fn.apply(data, args);
+      }
     });
+
+    return (typeof result !== 'undefined' ? result : this);
   };
 
-  $.fn.completer.constructor = Completer;
+  $.fn.completer.Constructor = Completer;
   $.fn.completer.setDefaults = Completer.setDefaults;
 
   $(function () {
-    $('[completer]').completer();
+    $('[data-toggle="completer"],[completer]').completer();
   });
 
 });
