@@ -1,7 +1,8 @@
 # Files to ignore
 
 node_modules
-release
+_gh_pages
+releases
 build
 demos
 tests
