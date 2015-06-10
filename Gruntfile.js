@@ -177,12 +177,6 @@ module.exports = function (grunt) {
         flatten: true,
         src: 'dist/*.js',
         dest: '_gh_pages/js/'
-      },
-      html: {
-        expand: true,
-        flatten: true,
-        src: 'docs/*.html',
-        dest: '_gh_pages'
       }
     },
 
@@ -200,7 +194,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', ['clean:build', 'copy:build']);
   grunt.registerTask('release', ['clean:release', 'copy:release']);
   grunt.registerTask('docs', ['copy:docsCSS', 'copy:docsJS']);
-  grunt.registerTask('site', ['clean:site', 'uglify:site', 'cssmin:site', 'copy:siteCSS', 'copy:siteJS', 'copy:html', 'htmlmin']);
+  grunt.registerTask('site', ['clean:site', 'uglify:site', 'cssmin:site', 'copy:siteCSS', 'copy:siteJS', 'htmlmin']);
 
   grunt.registerTask('default', ['clean:dist', 'jshint', 'jscs', 'uglify:dist', 'copy:dist', 'replace', 'csslint', 'autoprefixer', 'csscomb', 'cssmin:dist', 'build', 'release', 'docs', 'site']);
 };
