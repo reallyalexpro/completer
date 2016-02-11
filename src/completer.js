@@ -283,7 +283,7 @@
           left = offset.left,
           top = offset.top,
           height = $element.outerHeight(),
-          width = $element.outerWidth(),
+          width = $element[0].getBoundingClientRect().width,
           styles = {
             minWidth: width,
             zIndex: this.defaults.zIndex
